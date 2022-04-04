@@ -28,7 +28,7 @@ class QuartzApplicationTests {
         Map<String, String> params = new HashMap<>();
         params.put("1", "1");
         param.setRequestParams(params);
-        param.setCallBackUrl("https://11");
+        param.setCallBackUrl("https://callback/tirgger");
         param.setCron("0 */1 * * * ? *");
         param.setKey("TEST-CRON");
         param.setGroup("TEST");
