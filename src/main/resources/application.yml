@@ -1,0 +1,32 @@
+spring:
+  profiles:
+    active: dev
+---
+mybatis-plus:
+  # 如果是放在src/main/java目录下 classpath:/com/yourpackage/*/mapper/*Mapper.xml
+  # 如果是放在resource目录 classpath:/mapper/*Mapper.xml
+  mapper-locations: classpath*:/mapper/**/*.xml
+  # 实体扫描，多个package用逗号或者分号分隔
+  type-aliases-package:  com.quartz.demo.*.model
+  # 枚举策略，支持统配符 * 或者 ; 分割
+  type-enums-package: com.quartz.demo.*.enum
+  global-config:
+    db-config:
+      db-type: mysql
+      # 全局默认主键类型
+      id-type: AUTO
+      # 字段策略
+      field-strategy: NOT_EMPTY
+      # 驼峰下划线转换
+      table-under-line: true
+      # 逻辑已删除值(默认为 1)
+      logic-delete-value: 1
+      # 逻辑未删除值(默认为 0)
+      logic-not-delete-value: 0
+  #自定义填充策略接口实现
+  configuration:
+    #配置返回数据库(column下划线命名&&返回java实体是驼峰命名)，自动匹配无需as（没开启这个，SQL需要写as： select user_id as userId）
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    #配置JdbcTypeForNull, oracle数据库必须配置
+    jdbc-type-for-null: 'null'

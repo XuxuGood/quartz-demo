@@ -1,0 +1,39 @@
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    name: dev
+    url: jdbc:mysql://localhost:3306/quartz?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=GMT%2B8
+    username: root
+    password: 960211
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 15
+      auto-commit: true
+      idle-timeout: 30000
+      pool-name: DatebookHikariCP
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
+
+# 端口号
+server:
+  port: 8081
+
+# Swagger
+swagger:
+  # 生产环境建议关闭swagger文档
+  enable: false
+  # 可配置多包中间以 ; 分割
+  basePackage: com.quartz.demo
+  title: api文档
+  description: 接口文档
+  author: 徐旭
+  version: 1.0.0
+
+# 日志
+logging:
+  console_enabled: true

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <springProperty name="logging.console_enabled" source="logging.console_enabled"/>
+    <property name="logging.log_level" value="INFO"/>
+    <property name="logging.log_file_path" value="home/work/logs/quartz"/>
+    <property name="logging.log_pattern"
+              value="${logging.log_pattern:-%d{yyyy-MM-dd HH:mm:ss.SSS} %5p %-40.40logger{39}[%line][%thread] %m%n}"/>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>${logging.log_pattern}</Pattern>
+        </layout>
+
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>DEBUG</level>
+        </filter>
+    </appender>
+
+    <appender name="LOG_FILE_SYSTEM" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logging.log_file_path}/web.log</file>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>${logging.log_level}</level>
+        </filter>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>${logging.log_pattern}</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logging.log_file_path}/history/%d{yyyy-MM-dd}.web.%i.zip</fileNamePattern>
+            <maxHistory>${logging.max_history:-30}</maxHistory>
+            <totalSizeCap>${logging.total_size_cap:-10GB}</totalSizeCap>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>${logging.max_log_file_size:-50MB}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="quartzAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logging.log_file_path}/quartz_info.log</file>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>${logging.log_level}</level>
+        </filter>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>${logging.log_pattern}</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>
+                ${logging.log_file_path}/history/quartz_info/%d{yyyy-MM-dd}.%i.quartz_info.zip
+            </fileNamePattern>
+            <maxHistory>${logging.max_history:-30}</maxHistory>
+            <totalSizeCap>${logging.total_size_cap:-10GB}</totalSizeCap>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>${logging.max_log_file_size:-50MB}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="quartzErrorAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${logging.log_file_path}/quartz_error.log</File>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <FileNamePattern>
+                ${logging.log_file_path}/history/quartz_error/quartz_error.log.%i.bak
+            </FileNamePattern>
+            <MinIndex>1</MinIndex>
+            <MaxIndex>13</MaxIndex>
+        </rollingPolicy>
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <MaxFileSize>50MB</MaxFileSize>
+        </triggeringPolicy>
+        <encoder>
+            <charset>UTF-8</charset>
+            <Pattern>%d [%thread] %-5level %logger{36} %line - %msg%n</Pattern>
+        </encoder>
+    </appender>
+
+    <root level="${logging.log_level}">
+        <if condition='"true".equals(property("logging.console_enabled"))'>
+            <then>
+                <appender-ref ref="STDOUT"/>
+            </then>
+        </if>
+        <appender-ref ref="LOG_FILE_SYSTEM"/>
+    </root>
+
+    <logger name="com.scaffolding.example" level="INFO">
+        <appender-ref ref="quartzAppender"/>
+        <appender-ref ref="quartzErrorAppender"/>
+    </logger>
+
+</configuration>
