@@ -23,7 +23,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `qrtz_blob_triggers`;
 CREATE TABLE `qrtz_blob_triggers` (
   `SCHED_NAME` varchar(120) NOT NULL COMMENT '计划名',
-  `TRIGGER_NAME` varchar(200) NOT NULL COMMENT '     触发器名称',
+  `TRIGGER_NAME` varchar(200) NOT NULL COMMENT '触发器名称',
   `TRIGGER_GROUP` varchar(200) NOT NULL COMMENT '触发器组',
   `BLOB_DATA` blob,
   PRIMARY KEY (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`) USING BTREE,
@@ -47,7 +47,7 @@ CREATE TABLE `qrtz_calendars` (
 DROP TABLE IF EXISTS `qrtz_cron_triggers`;
 CREATE TABLE `qrtz_cron_triggers` (
   `SCHED_NAME` varchar(120) NOT NULL COMMENT '计划名称',
-  `TRIGGER_NAME` varchar(200) NOT NULL COMMENT '     触发器名称',
+  `TRIGGER_NAME` varchar(200) NOT NULL COMMENT '触发器名称',
   `TRIGGER_GROUP` varchar(200) NOT NULL COMMENT '触发器组',
   `CRON_EXPRESSION` varchar(120) NOT NULL COMMENT '时间表达式',
   `TIME_ZONE_ID` varchar(80) DEFAULT NULL COMMENT '时区ID     nvarchar     80',
@@ -65,7 +65,7 @@ CREATE TABLE `qrtz_fired_triggers` (
   `TRIGGER_GROUP` varchar(200) NOT NULL COMMENT '触发器组',
   `INSTANCE_NAME` varchar(200) NOT NULL COMMENT '当前实例的名称',
   `FIRED_TIME` bigint(13) NOT NULL COMMENT '当前执行时间',
-  `SCHED_TIME` bigint(13) NOT NULL COMMENT '     计划时间',
+  `SCHED_TIME` bigint(13) NOT NULL COMMENT '计划时间',
   `PRIORITY` int(11) NOT NULL COMMENT '权重',
   `STATE` varchar(16) NOT NULL COMMENT '状态',
   `JOB_NAME` varchar(200) DEFAULT NULL COMMENT '作业名称',

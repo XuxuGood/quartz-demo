@@ -78,7 +78,7 @@ public class SchedulerServiceImpl implements SchedulerService {
     @Override
     public void deleteQuartzJob(String key, String group) {
         log.info("delete cron job, key: {}, group: {}", key, group);
-        if (org.apache.commons.lang.StringUtils.isBlank(key) || org.apache.commons.lang.StringUtils.isBlank(group)) {
+        if (StringUtils.isBlank(key) || StringUtils.isBlank(group)) {
             log.error("empty key or group");
             throw new BusinessException("empty key or group");
         }
